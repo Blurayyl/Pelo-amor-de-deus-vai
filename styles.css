@@ -17,3 +17,53 @@ h1 {
 .carta-container {
     margin-top: 20px;
 }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    width: 100%;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Ocupa toda a altura da tela */
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('sua-imagem-de-fundo.jpg'); /* Imagem de fundo */
+    background-size: cover;
+    background-position: center;
+    z-index: 1; /* A imagem de fundo fica atrás */
+}
+
+.card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white; /* Cor branca para a carta */
+    padding: 20px;
+    border-radius: 10px; /* Bordas arredondadas */
+    z-index: 2; /* A carta fica acima da imagem de fundo */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
+    width: 80%; /* Ajuste o tamanho da carta */
+    max-width: 800px; /* Limita o tamanho máximo da carta */
+    height: auto; /* Permite o tamanho automático da carta */
+}
+
+.card-iframe {
+    width: 100%;
+    height: 500px; /* Ajuste a altura conforme necessário */
+    border: none; /* Remove a borda do iframe */
+}
