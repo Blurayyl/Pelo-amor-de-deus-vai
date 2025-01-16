@@ -11,7 +11,10 @@
             width: auto; /* Largura automática */
             height: 50vh; /* A altura será 50% da altura da tela */
             object-fit: contain; /* Garante que a imagem se ajuste à altura sem distorcer */
-            margin-top: 20px; /* Espaço entre o botão e a imagem */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Centraliza a imagem */
         }
         body {
             font-family: Arial, sans-serif;
