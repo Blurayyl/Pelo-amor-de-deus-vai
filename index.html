@@ -48,6 +48,96 @@
         });
     </script>
 
+#fireworksCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<button id="showButton">Eu te amo</button>
+<canvas id="fireworksCanvas"></canvas>
+
+<script>
+const canvas = document.getElementById('fireworksCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const fireworks = [];
+
+// Classe para os fogos de artifício
+class Firework {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.color = 'rgb(' + Math.random() * 255 + ',' + Math.random() * 255 + ',' + Math.random() * 255 + ')';
+        this.particles = [];
+        for (let i = 0; i < 100; i++) {
+            this.particles.push({
+                x: this.x,
+                y: this.y,
+                speedX: (Math.random() - 0.5) * 10,
+                speedY: (Math.random() - 0.5) * 10,
+                alpha: Math.random(),
+                size: Math.random() * 3 + 1
+            });
+        }
+    }
+
+    // Desenha as partículas
+    draw() {
+        this.particles.forEach((particle, index) => {
+            ctx.beginPath();
+            ctx.arc(particle.x, particle.y, particle.size, 0, 2 * Math.PI);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            particle.x += particle.speedX;
+            particle.y += particle.speedY;
+            particle.alpha -= 0.01; // Fade out
+            particle.size *= 0.95; // Encolhe ao longo do tempo
+
+            if (particle.alpha <= 0) {
+                this.particles.splice(index, 1);
+            }
+        });
+    }
+}
+
+// Função para criar o efeito de fogos de artifício
+function createFirework() {
+    const x = canvas.width / 2;
+    const y = canvas.height / 2;
+    fireworks.push(new Firework(x, y));
+}
+
+// Função de animação
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    fireworks.forEach(firework => firework.draw());
+    requestAnimationFrame(animate);
+}
+
+// Evento para disparar fogos de artifício
+document.getElementById('showButton').addEventListener('click', function() {
+    const fireworkInterval = setInterval(createFirework, 500); // Cria fogos de artifício a cada 500ms
+
+    setTimeout(() => {
+        clearInterval(fireworkInterval); // Para a animação após 15 segundos
+    }, 15000); // 15 segundos
+
+    // Exibe a animação
+    canvas.style.display = 'block';
+});
+
+// Começa a animação
+animate();
+</script>
+
 </body>
 </html>
-
