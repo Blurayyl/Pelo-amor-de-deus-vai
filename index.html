@@ -49,4 +49,130 @@
     </script>
 </head>
 </body>
+<canvas id="fireworks"></canvas>
+
+<script>
+    const canvas = document.getElementById("fireworks");
+    const ctx = canvas.getContext("2d");
+
+    // Ajuste para garantir que o canvas sempre ocupe toda a tela
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    // Inicializa o tamanho do canvas
+    resizeCanvas();
+
+    // Atualiza o tamanho do canvas quando a janela é redimensionada
+    window.addEventListener('resize', resizeCanvas);
+
+    class Particle {
+        constructor(x, y, color) {
+            this.x = x;
+            this.y = y;
+            this.color = color;
+            this.size = Math.random() * 3 + 1;
+            this.speedX = Math.random() * 6 - 3;
+            this.speedY = Math.random() * 6 - 3;
+            this.life = 100;
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            this.speedY += 0.05; // Gravidade
+
+            this.life -= 1;
+            if (this.life <= 0) {
+                this.size -= 0.1;
+            }
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        }
+    }
+
+    class Firework {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.particles = [];
+            this.exploded = false;
+            this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            this.launchSpeed = Math.random() * 2 + 5;
+        }
+
+        launch() {
+            if (!this.exploded) {
+                this.y -= this.launchSpeed;
+                if (this.y <= window.innerHeight / 2) {
+                    this.explode();
+                }
+            }
+        }
+
+        explode() {
+            this.exploded = true;
+            const numParticles = 100;
+            for (let i = 0; i < numParticles; i++) {
+                this.particles.push(new Particle(this.x, this.y, this.color));
+            }
+        }
+
+        update() {
+            if (!this.exploded) {
+                this.launch();
+            }
+            this.particles.forEach(particle => {
+                particle.update();
+            });
+        }
+
+        draw() {
+            if (!this.exploded) {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 5, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            } else {
+                this.particles.forEach(particle => {
+                    particle.draw();
+                });
+            }
+        }
+    }
+
+    const fireworks = [];
+
+    function createFirework() {
+        const firework = new Firework(Math.random() * canvas.width, canvas.height);
+        fireworks.push(firework);
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        fireworks.forEach(firework => {
+            firework.update();
+            firework.draw();
+        });
+
+        // Remover fogos de artifício que já explodiram e desapareceram
+        for (let i = fireworks.length - 1; i >= 0; i--) {
+            if (fireworks[i].particles.every(p => p.life <= 0)) {
+                fireworks.splice(i, 1);
+            }
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    setInterval(createFirework, 500); // Criar um novo fogo de artifício a cada 500ms
+    animate();
+</script>
+</body>
 </html>
