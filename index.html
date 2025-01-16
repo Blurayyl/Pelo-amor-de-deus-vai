@@ -49,130 +49,134 @@
     </script>
 </head>
 </body>
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+</style>
+</head>
+<body>
 <canvas id="fireworks"></canvas>
 
 <script>
-    const canvas = document.getElementById("fireworks");
-    const ctx = canvas.getContext("2d");
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
 
-    // Ajuste para garantir que o canvas sempre ocupe toda a tela
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+// Ajuste do tamanho do canvas
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+// Inicializa o tamanho do canvas
+resizeCanvas();
+
+// Atualiza o tamanho do canvas ao redimensionar a janela
+window.addEventListener('resize', resizeCanvas);
+
+// Função para gerar uma cor aleatória e vibrante
+function getRandomColor() {
+    const hue = Math.random() * 360;
+    const saturation = 100;
+    const lightness = 50;
+    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+}
+
+class Particle {
+    constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = Math.random() * 6 - 3;
+        this.speedY = Math.random() * 6 - 3;
     }
 
-    // Inicializa o tamanho do canvas
-    resizeCanvas();
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.speedY += 0.05; // Gravidade
+    }
 
-    // Atualiza o tamanho do canvas quando a janela é redimensionada
-    window.addEventListener('resize', resizeCanvas);
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+}
 
-    class Particle {
-        constructor(x, y, color) {
-            this.x = x;
-            this.y = y;
-            this.color = color;
-            this.size = Math.random() * 3 + 1;
-            this.speedX = Math.random() * 6 - 3;
-            this.speedY = Math.random() * 6 - 3;
-            this.life = 100;
-        }
+class Firework {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.particles = [];
+        this.exploded = false;
+        this.launchSpeed = Math.random() * 2 + 5;
+        this.color = getRandomColor(); // Cor vibrante para o fogo de artifício
+    }
 
-        update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
-            this.speedY += 0.05; // Gravidade
-
-            this.life -= 1;
-            if (this.life <= 0) {
-                this.size -= 0.1;
+    launch() {
+        if (!this.exploded) {
+            this.y -= this.launchSpeed;
+            if (this.y <= window.innerHeight / 2) {
+                this.explode();
             }
         }
+    }
 
-        draw() {
+    explode() {
+        this.exploded = true;
+        const numParticles = 100;
+        for (let i = 0; i < numParticles; i++) {
+            this.particles.push(new Particle(this.x, this.y, getRandomColor())); // Partículas com cores vibrantes
+        }
+    }
+
+    update() {
+        if (!this.exploded) {
+            this.launch();
+        }
+        this.particles.forEach(particle => {
+            particle.update();
+        });
+    }
+
+    draw() {
+        if (!this.exploded) {
             ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.arc(this.x, this.y, 5, 0, Math.PI * 2);
             ctx.fillStyle = this.color;
             ctx.fill();
-        }
-    }
-
-    class Firework {
-        constructor(x, y) {
-            this.x = x;
-            this.y = y;
-            this.particles = [];
-            this.exploded = false;
-            this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
-            this.launchSpeed = Math.random() * 2 + 5;
-        }
-
-        launch() {
-            if (!this.exploded) {
-                this.y -= this.launchSpeed;
-                if (this.y <= window.innerHeight / 2) {
-                    this.explode();
-                }
-            }
-        }
-
-        explode() {
-            this.exploded = true;
-            const numParticles = 100;
-            for (let i = 0; i < numParticles; i++) {
-                this.particles.push(new Particle(this.x, this.y, this.color));
-            }
-        }
-
-        update() {
-            if (!this.exploded) {
-                this.launch();
-            }
+        } else {
             this.particles.forEach(particle => {
-                particle.update();
+                particle.draw();
             });
         }
-
-        draw() {
-            if (!this.exploded) {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, 5, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.fill();
-            } else {
-                this.particles.forEach(particle => {
-                    particle.draw();
-                });
-            }
-        }
     }
+}
 
-    const fireworks = [];
+const fireworks = [];
 
-    function createFirework() {
-        const firework = new Firework(Math.random() * canvas.width, canvas.height);
-        fireworks.push(firework);
-    }
+function createFirework() {
+    const firework = new Firework(Math.random() * canvas.width, canvas.height);
+    fireworks.push(firework);
+}
 
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        fireworks.forEach(firework => {
-            firework.update();
-            firework.draw();
-        });
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    fireworks.forEach(firework => {
+        firework.update();
+        firework.draw();
+    });
 
-        // Remover fogos de artifício que já explodiram e desapareceram
-        for (let i = fireworks.length - 1; i >= 0; i--) {
-            if (fireworks[i].particles.every(p => p.life <= 0)) {
-                fireworks.splice(i, 1);
-            }
-        }
+    requestAnimationFrame(animate);
+}
 
-        requestAnimationFrame(animate);
-    }
-
-    setInterval(createFirework, 500); // Criar um novo fogo de artifício a cada 500ms
-    animate();
+setInterval(createFirework, 500); // Criar um novo fogo de artifício a cada 500ms
+animate();
 </script>
 </body>
 </html>
