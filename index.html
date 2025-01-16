@@ -8,8 +8,10 @@
         /* Esconde a imagem inicialmente */
         #image {
             display: none;
-            width: 400px; /* Largura fixa da imagem */
-            height: auto; /* Mantém a proporção da imagem */
+            width: auto; /* Largura automática */
+            height: 50vh; /* A altura será 50% da altura da tela */
+            object-fit: contain; /* Garante que a imagem se ajuste à altura sem distorcer */
+            margin-top: 20px; /* Espaço entre o botão e a imagem */
         }
         body {
             font-family: Arial, sans-serif;
@@ -22,8 +24,8 @@
             font-size: 1.5rem; /* Aumenta o tamanho do texto do botão */
             cursor: pointer;
             margin-bottom: 20px; /* Espaço entre o botão e a imagem */
-            background-color: #007BFF; /* Cor de fundo do botão */
-            color: white; /* Cor do texto do botão */
+            background-color: #000000; /* Cor de fundo do botão */
+            color: rgb(255, 97, 202); /* Cor do texto do botão */
             border: none; /* Remove bordas */
             border-radius: 8px; /* Arredonda os cantos do botão */
             transition: background-color 0.3s; /* Adiciona efeito de transição */
