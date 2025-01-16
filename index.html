@@ -1,76 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tema VSCode</title>
-  <style>
-    /* Corpo da página */
-    body {
-      background-color: #1e1e1e; /* Cor do fundo do VSCode */
-      color: #d4d4d4; /* Cor padrão do texto no VSCode */
-      font-family: Consolas, 'Courier New', monospace; /* Fonte parecida com o VSCode */
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-
-    /* Cabeçalhos */
-    h1, h2 {
-      color: #569cd6; /* Azul usado em palavras-chave no VSCode */
-    }
-
-    /* Links */
-    a {
-      color: #4ec9b0; /* Cor de links no VSCode */
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* Botões */
-    button {
-      background-color: #007acc; /* Cor do botão VSCode */
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #005a9e;
-    }
-
-    /* Caixa de código */
-    pre {
-      background-color: #252526; /* Fundo da área de código no VSCode */
-      color: #dcdcdc;
-      padding: 15px;
-      border-radius: 4px;
-      width: 80%;
-      overflow-x: auto;
-      font-family: Consolas, 'Courier New', monospace;
-    }
-  </style>
-</head>
-<body>
-  <h1>Bem-vindo ao Tema VSCode!</h1>
-  <h2>Este é um exemplo de página com visual inspirado no VSCode</h2>
-  <p>Veja o botão e o estilo de texto abaixo:</p>
-  <button>Clique aqui</button>
-  <p>Ou confira um exemplo de código:</p>
-  <pre>
-/* Exemplo de código */
-function helloWorld() {
-  console.log('Hello, world!');
-}
-  </pre>
-  <p>Visite o <a href="https://code.visualstudio.com/">site do VSCode</a> para mais informações.</p>
-</body>
-</html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Eu Te Amo</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="container">
+            <div id="fogos" class="hidden">
+                <h1>Eu te amo!</h1>
+            </div>
+            <button id="btn-amor">Eu te amo</button>
+            <div id="imagem-container" class="hidden">
+                <img src="imagem.jpg" alt="Imagem Amor" id="imagem">
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+    </html>
