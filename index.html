@@ -184,4 +184,65 @@ setInterval(createFirework, 500); // Criar um novo fogo de artifício a cada 500
 animate();
 </script>
 </body>
+
+
+
+<style>
+    /* Estilizando o corpo da página */
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f0f0;
+    }
+
+    /* Estilizando o botão */
+    #hideButton {
+        padding: 20px 40px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        background-color: transparent;
+        color: pink;
+        border: 2px solid pink;
+        border-radius: 8px;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    #hideButton:hover {
+        background-color: pink;
+        color: white;
+        transform: scale(1.1);
+    }
+
+    /* Estilizando a imagem */
+    #image {
+        width: auto;
+        height: 50vh; /* Altura da imagem: 50% da tela */
+        object-fit: contain;
+        margin-bottom: 20px; /* Espaço entre a imagem e o botão */
+    }
+</style>
+</head>
+<body>
+
+<img id="image" src="https://raw.githubusercontent.com/Blurayyl/Pelo-amor-de-deus-vai/bff3ff62658f4dfa296e5a083a5fe7a4713a3b3e/A.png" alt="Imagem">
+<button id="hideButton">Lero Lero</button>
+
+<script>
+    const image = document.getElementById('image');
+    const hideButton = document.getElementById('hideButton');
+
+    // Oculta a imagem ao clicar no botão "Lero Lero"
+    hideButton.addEventListener('click', function() {
+        image.style.display = 'none';
+    });
+</script>
+
+</body>
 </html>
