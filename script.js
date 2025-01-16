@@ -1,16 +1,12 @@
-document.getElementById('btn-amor').addEventListener('click', () => {
-    // Exibir fogos de artifício com a mensagem
-    const fogos = document.getElementById('fogos');
-    fogos.classList.remove('hidden');
+// Espera o DOM carregar completamente antes de adicionar o evento ao botão
+window.addEventListener('DOMContentLoaded', function() {
+    // Pega o botão e o container da imagem
+    const btnAmor = document.getElementById('btn-amor');
+    const imagemContainer = document.getElementById('imagem-container');
 
-    // Após alguns segundos, mostrar a imagem
-    setTimeout(() => {
-        const imagemContainer = document.getElementById('imagem-container');
+    // Adiciona o evento de clique no botão
+    btnAmor.addEventListener('click', function() {
+        // Remove a classe 'hidden' do container da imagem para exibi-la
         imagemContainer.classList.remove('hidden');
-    }, 3000); // 3 segundos após os fogos
-});
-
-// Função para esconder os fogos ao clicar
-document.getElementById('fogos').addEventListener('click', () => {
-    document.getElementById('fogos').classList.add('hidden');
+    });
 });
