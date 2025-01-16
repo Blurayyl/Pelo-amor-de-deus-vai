@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eu Te Amo</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Mostrar Imagem</title>
+    <style>
+        #image {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div id="container">
-        <!-- Botão para exibir a imagem -->
-        <button id="btn-amor">Eu te amo</button>
+    <button id="showButton">Eu te amo</button>
+    <img id="image" src="https://raw.githubusercontent.com/Blurayyl/Pelo-amor-de-deus-vai/bff3ff62658f4dfa296e5a083a5fe7a4713a3b3e/A.png" alt="Imagem">
 
-        <!-- Exibição da Imagem, inicialmente oculta -->
-        <div id="imagem-container" class="hidden">
-            <img src="https://raw.githubusercontent.com/Blurayyl/Pelo-amor-de-deus-vai/bff3ff62658f4dfa296e5a083a5fe7a4713a3b3e/A.png" alt="Imagem Amor" id="imagem">
-        </div>
-    </div>
-
-    <!-- Link para o arquivo JavaScript -->
-    <script src="js/script.js"></script>
+    <script>
+        document.getElementById('showButton').addEventListener('click', function() {
+            var image = document.getElementById('image');
+            image.style.display = 'block'; // Faz a imagem aparecer
+        });
+    </script>
 </body>
 </html>
